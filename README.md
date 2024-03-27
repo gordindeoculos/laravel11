@@ -76,3 +76,39 @@ php artisan ui vue --auth
 npm install
 npm run build (ou vite build –watch)
 ```
+
+## Configurar o idioma em português brasileiro
+
+### Traduzir manualmente o idioma nos arquivos:
+
+- `resources\views\layouts\app.blade.php`
+- `resources\views\auth\login.blade.php`
+- `resources\views\auth\register.blade.php`
+- `resources\views\auth\passwords\email.blade.php`
+- `resources\views\auth\passwords\reset.blade.php`
+
+### Traduzir mensagens de retorno do Laravel para o idioma português brasileiro
+
+1. Fazer o download dos arquivos de tradução pt-br:
+https://drive.google.com/file/d/1MCfa-WWYhQuaN6qbp3YKfTTueovZI1Vl/view?usp=sharing
+
+2. Executar o comando: `php artisan lang:publish`;
+
+3. Descompactar o arquivo `Laravel_pt-BR.rar`;
+
+4. Copiar a pasta `pt-br` para a pasta `lang`;
+
+5. Modificar no arquivo `.env` o valor das variáveis `APP_LOCALE` e `APP_FALLBACK_LOCALE` para `pt-br`: 
+
+```
+APP_LOCALE=pt-br
+APP_FALLBACK_LOCALE=pt-br
+```
+
+##  Configuração do fuso horário do Brasil
+
+Modificar no arquivo `.env` o valor da variável `APP_TIMEZONE` para `America/Sao_Paulo`: 
+
+```
+APP_TIMEZONE=America/Sao_Paulo
+```
