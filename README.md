@@ -1,66 +1,78 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Projeto Laravel 11 com Pacote de Autenticação Laravel/UI
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Preparar Ambiente de Desenvolvimento
 
-## About Laravel
+### Instalar e Configurar os probramas
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP
+- Composer
+- Node.js (NPM)
+- MySQL Server
+- Visual Studio Code (VS Code)
+- BDeaver
+- Git
+- Criar conta no GITHUB
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Configurações no arquivo `php.ini`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+#### Habilitar as extensões:
 
-## Learning Laravel
+```
+extension=zip
+extension=fileinfo
+extension=curl
+extension=gd
+extension=mysqli
+extension=pdo_mysqlextension=pdo_pgsql
+extension=pdo_sqliteextension=pgsql
+extension=sqlite3
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+#### Habilitar a exibição de erros em tela, o tipo de erro a ser reportado e o registro de logs de erros:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```
+display_errors = On
+error_reporting = E_ALL
+log_errors = On
+error_log = /tmp/php_errors.log
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### Aumentar o limite de memória (em Mb), bem como o tempo de execução máximo de cada script (em segundos):
 
-## Laravel Sponsors
+```
+memory_limit = 256M
+max_execution_time = 120
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+#### Permitir o upload de arquivos e aumentar os limites de upload e envio de formulários:
 
-### Premium Partners
+```
+session.gc_maxlifetime = 14000
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Criar o Projeto Laravel 11
 
-## Contributing
+Para criar um projeto em Laravel, execute o comando:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+composer create-project laravel/laravel:^11.0 example-app
+```
 
-## Code of Conduct
+Para executar o servidor web embutido do Laravel, utilize o comando:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+php artisan serve
+```
 
-## Security Vulnerabilities
+Com o servidor em execução, acesse pelo navegador o link  `localhost:8000` ou `127.0.0.1:8000`.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Instalar e Configurar o pacote de Autenticação Laravel/UI
 
-## License
+Para instalar o pacote de autenticação do Laravel/UI, execute os comandos abaixo:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+composer require laravel/ui
+php artisan ui vue --auth
+npm install
+npm run build (ou vite build –watch)
+```
