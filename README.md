@@ -23,8 +23,10 @@ extension=fileinfo
 extension=curl
 extension=gd
 extension=mysqli
-extension=pdo_mysqlextension=pdo_pgsql
-extension=pdo_sqliteextension=pgsql
+extension=pdo_mysql
+extension=pdo_pgsql
+extension=pdo_sqlite
+extension=pgsql
 extension=sqlite3
 ```
 
