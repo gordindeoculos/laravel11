@@ -2,7 +2,7 @@
 
 ## Preparar Ambiente de Desenvolvimento
 
-### Instalar e Configurar os probramas
+### Instalar e Configurar os Programas
 
 - PHP
 - Composer
