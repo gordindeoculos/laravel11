@@ -223,7 +223,7 @@ Através deste teste é possível verificar que a **Redefinição de Senha** est
 
 Neste tópico iremos verificar como personalizar a mensagem (notificação) enviada por e-mail ao usuário quando solicitado a redefinição de senha.
 
-#### Opção 1: Alterar diretamente no modelo padrão de notificação de redefinição de senha do Laravel
+#### Opção 1: Alterar diretamente no modelo padrão de notificação para redefinição de senha do Laravel
 
 Aqui, iremos fazer a alteração diretamente no modelo padrão de notificação de redefinição de senha por e-mail do Laravel.
 
@@ -241,7 +241,7 @@ protected function buildMailMessage($url)
 }
 ```
 
-Abra o arquivo `vendor/laravel/framework/src/Illuminate/Notifications/resources/views/email.blade.php` e altere o trecho de código conforme abaixo:
+Abra o arquivo `vendor/laravel/framework/src/Illuminate/Notifications/resources/views/email.blade.php` e altere os trechos de código conforme abaixo:
 
 ```php
 {{-- Greeting --}}
@@ -276,7 +276,7 @@ Abra o arquivo `vendor/laravel/framework/src/Illuminate/Notifications/resources/
 </x-slot:subcopy>
 ```
 
-#### Opção 2: Criar um modelo personalizado de notificação de redefinição de senha
+#### Opção 2: Criar um modelo personalizado de notificação para redefinição de senha
 
 Aqui iremos criar uma notificação de redefinição de senha por e-mail e personalizá-la, sem a necessidade de alterar o modelo padrão do Laravel.
 
@@ -300,7 +300,7 @@ use App\Notifications\MyResetPassword;
 
 **Passo 3:** Adicione um novo método ao seu modelo de usuário
 
-Dentro do seu modelo de usuário, adicione o seguinte método:
+Dentro do seu modelo de usuário (`app/Models/User.php`), adicione o seguinte método:
 
 ```php
 public function sendPasswordResetNotification($token)
@@ -323,89 +323,77 @@ Este comando publicará os modelos de notificação por e-mail no diretório `re
 
 **Passo 5:** Edite a classe Notification `MyResetPassword`
 
-Abra o arquivo da classe de notificação `MyResetPassword` (localizado em `app/Notifications/MyResetPassword.php`).
+1. Abra o arquivo da classe de notificação `MyResetPassword` (localizado em `app/Notifications/MyResetPassword.php`).
 
-Adicione a classe `use Illuminate\Support\Facades\Lang;`.
+2. Adicione a classe:
 
-Adicione a variável `public $token;`.
+    ```php
+    use Illuminate\Support\Facades\Lang;
+    ```
 
-Modifique o método construtor (construct) definindo o atributo `$this->token = $token;` conforme abaixo:
+3. Adicione a variável  (atribuito) `public $token;`.
 
-```php
-public function __construct($token)
-{
-   $this->token = $token;
-}
-```
+    ```php
+    public $token;
+    ```
 
-Edite o método `toMail()` conforme o código:
+4. Modifique o método construtor (`construct`) definindo o atributo `$this->token = $token;` conforme abaixo:
 
-```php
-public function toMail($notifiable)
-{
-   $url = url(config('app.url') . '/password/reset/' . $this->token . '?email=' . urlencode($notifiable->getEmailForPasswordReset()));
+    ```php
+    public function __construct($token)
+    {
+        $this->token = $token;
+    }
+    ```
 
-   return (new MailMessage)
-      ->subject(Lang::get('Notificação Personalizada de Redefinição de Senha'))
-      ->line(Lang::get('** Essa notificação é personalizada ** Você está recebendo este e-mail porque recebemos uma solicitação de redefinição de senha para sua conta.'))
-      ->action(Lang::get('Redefinir Senha'), $url)
-      ->line(Lang::get('Este link de redefinição de senha expirará em :count minutos.', ['count' => config('auth.passwords.' . config('auth.defaults.passwords') . '.expire')]))
-      ->line(Lang::get('Se você não solicitou uma redefinição de senha, nenhuma ação adicional é necessária.'));
-}
-```
+5. Edite o método `toMail()` conforme o código:
+
+    ```php
+    public function toMail($notifiable)
+    {
+    $url = url(config('app.url') . '/password/reset/' . $this->token . '?email=' . urlencode($notifiable->getEmailForPasswordReset()));
+
+    return (new MailMessage)
+        ->subject(Lang::get('Notificação Personalizada de Redefinição de Senha'))
+        ->line(Lang::get('** Essa notificação é personalizada ** Você está recebendo este e-mail porque recebemos uma solicitação de redefinição de senha para sua conta.'))
+        ->action(Lang::get('Redefinir Senha'), $url)
+        ->line(Lang::get('Este link de redefinição de senha expirará em :count minutos.', ['count' => config('auth.passwords.' . config('auth.defaults.passwords') . '.expire')]))
+        ->line(Lang::get('Se você não solicitou uma redefinição de senha, nenhuma ação adicional é necessária.'));
+    }
+    ```
 
 **Passo 6:** Edite o modelo de folha de e-mail
 
-Se desejar personalizar o layout do e-mail de redefinição de senha, abra o arquivo `email.blade.php` no diretório `resources/views/vendor/notifications` e faça as alterações necessárias.
+Abra o arquivo `resources/views/vendor/notifications/email.blade.php` e altere os trechos de código conforme abaixo:
 
-Aqui está um exemplo de como deve ficar seu arquivo `email.blade.php`:
+**Greeting**:
 
 ```php
-<x-mail::message>
 {{-- Greeting --}}
 @if (! empty($greeting))
 # {{ $greeting }}
 @else
 @if ($level === 'error')
-# @lang('Opa!')
+# @lang('Opá, ocorreu um erro!')
 @else
 # @lang('Olá!')
 @endif
-@endif
+```
 
-{{-- Intro Lines --}}
-@foreach ($introLines as $line)
-{{ $line }}
+**Salutation**):
 
-@endforeach
-
-{{-- Action Button --}}
-@isset($actionText)
-<?php
-    $color = match ($level) {
-        'success', 'error' => $level,
-        default => 'primary',
-    };
-?>
-<x-mail::button :url="$actionUrl" :color="$color">
-{{ $actionText }}
-</x-mail::button>
-@endisset
-
-{{-- Outro Lines --}}
-@foreach ($outroLines as $line)
-{{ $line }}
-
-@endforeach
-
+```php
 {{-- Salutation --}}
 @if (! empty($salutation))
 {{ $salutation }}
 @else
 @lang('Atenciosamente'),<br>
 {{ config('app.name') }}
-@endif
+```
 
+**Subcopy**:
+
+```php
 {{-- Subcopy --}}
 @isset($actionText)
 <x-slot:subcopy>
@@ -417,9 +405,6 @@ Aqui está um exemplo de como deve ficar seu arquivo `email.blade.php`:
     ]
 ) <span class="break-all">[{{ $displayableActionUrl }}]({{ $actionUrl }})</span>
 </x-slot:subcopy>
-@endisset
-</x-mail::message>
-
 ```
 
 **Passo 7:** Edite o `.env`
@@ -432,7 +417,7 @@ APP_URL=http://localhost:8000
 
 **Passo 8:** Edite o arquivo `lang\pt-br\passwords.php`
 
-Para retornar uma mensagem personalizada quando o usuário fizer várias tentativas seguidas no *formulário de solicitação de redefinição de senha*, acrescente no `return` a linha:
+Para retornar uma mensagem personalizada quando o usuário fizer várias tentativas seguidas no ***formulário de solicitação de redefinição de senha***, acrescente ou altere a chave `throttled` dentro de `return[]`:
 
 ```php
 'throttled' => 'Muitas tentativas de login. Tente novamente em alguns segundos.',
