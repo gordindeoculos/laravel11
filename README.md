@@ -70,10 +70,7 @@ php artisan key:generate
 
 **5. Criar o arquivo `database.sqlite` dentro do diretório `database`:**
 
-```
-
-echo > database\database.sqlite 
-```
+Clique com o botão direito do mouse sobre a pasta `database`, no menu suspenso clique em `New File` ou `Novo Arquivo` e digite `database.sqlite` como nome do arquivo, em seguida pressione `Enter`.
 
 **6. Executar as migrações do banco de dados:**
 
