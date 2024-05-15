@@ -43,13 +43,13 @@ git clone https://github.com/gordindeoculos/laravel11.git
 Como foi feito o clone do projeto Laravel a partir do GitHub, é necessário executar os comandos abaixo
 para instalar as dependências do projeto e configurar o amebiente de desenvolvimento.
 
-**1. Instalar as dependência listadas no arquivo `composer.json`:**
+**1. Instalar as dependências listadas no arquivo `composer.json`:**
 
 ```
 composer install
 ```
 
-**2. Instalar as dependência listadas no arquivo `package.json`:**
+**2. Instalar as dependências listadas no arquivo `package.json`:**
 
 ```
 npm install
